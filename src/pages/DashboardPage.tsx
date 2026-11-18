@@ -1,56 +1,65 @@
+import { Link } from "react-router-dom";
 import { useAuth } from "../features/auth/AuthContext";
+import PageHeader from "../components/PageHeader";
 
 const alur = [
-  { judul: "Rencana pembelajaran", isi: "Tujuan, pemahaman bermakna, dan pengalaman belajar mendalam untuk satu topik.", status: "Berikutnya" },
-  { judul: "Modul ajar", isi: "Disusun otomatis dari rencana pembelajaran, siap diekspor ke Word atau PDF.", status: "Segera" },
-  { judul: "Perangkat asesmen", isi: "Soal, rubrik, dan lembar observasi yang terhubung ke tujuan pembelajaran.", status: "Segera" },
-  { judul: "Rekap nilai", isi: "Nilai siswa terkumpul per tujuan pembelajaran tanpa menyalin ulang.", status: "Segera" },
+  { judul: "Rencana pembelajaran", isi: "Tujuan, pemahaman bermakna, dan pengalaman belajar untuk satu topik.", to: "/app/perencanaan/rencana" },
+  { judul: "Modul ajar", isi: "Disusun dari rencana pembelajaran, siap diekspor ke Word atau PDF.", to: "/app/perencanaan/modul" },
+  { judul: "Perangkat asesmen", isi: "Soal, rubrik, dan lembar observasi yang terhubung ke tujuan pembelajaran.", to: "/app/asesmen" },
+  { judul: "Rekap nilai", isi: "Nilai siswa terkumpul per tujuan pembelajaran tanpa menyalin ulang.", to: "/app/nilai" },
 ];
 
 export default function DashboardPage() {
-  const { user, error, logout } = useAuth();
+  const { user } = useAuth();
+  const namaDepan = user?.displayName?.split(" ")[0];
 
   return (
-    <div className="mx-auto min-h-screen max-w-3xl px-6 py-10">
-      <header className="flex items-center justify-between">
-        <p className="font-display text-xl font-extrabold">Kelasku</p>
-        <div className="flex items-center gap-4 text-sm">
-          <span className="text-moss">{user?.displayName ?? user?.email}</span>
-          <button onClick={logout} className="rounded-md border border-mist px-3 py-1.5 font-medium hover:bg-mist">
-            Keluar
-          </button>
-        </div>
-      </header>
+    <>
+      <PageHeader
+        title={namaDepan ? `Selamat datang, ${namaDepan}.` : "Selamat datang."}
+        description="Setiap tahap administrasi memakai hasil tahap sebelumnya, jadi Anda mengisi sekali saja."
+      />
 
-      {error && (
-        <p role="alert" className="mt-6 rounded-lg border border-red-300 bg-red-50 px-4 py-3 text-sm text-red-800">
-          {error}
-        </p>
-      )}
+      {/* Layar lebar: dua kolom, kolom kanan tetap sehingga isi tidak menyisakan ruang kosong. */}
+      <div className="mt-10 grid gap-12 xl:grid-cols-[minmax(0,1fr)_26rem] 2xl:grid-cols-[minmax(0,1fr)_30rem]">
+        <section>
+          <h2 className="font-display text-2xl font-semibold">Lanjutkan pekerjaan</h2>
+          <div className="garis-buku mt-4 max-w-3xl pb-3">
+            <p>Belum ada dokumen. Mulailah dari kelas Anda, lalu susun</p>
+            <p>rencana pembelajaran pertama. Semua dokumen berikutnya</p>
+            <p>akan terisi dari data yang sama.</p>
+          </div>
+          <div className="mt-6 flex flex-wrap gap-3">
+            <Link to="/app/kelas" className="rounded-lg bg-chalk px-5 py-3 font-semibold text-ink hover:brightness-95">
+              Tambah kelas
+            </Link>
+            <Link to="/app/perencanaan/rencana" className="rounded-lg border-2 border-ink px-5 py-3 font-semibold hover:bg-mist">
+              Susun rencana pembelajaran
+            </Link>
+          </div>
+        </section>
 
-      <h1 className="mt-14 font-display text-4xl font-extrabold">
-        Selamat datang{user?.displayName ? `, ${user.displayName.split(" ")[0]}` : ""}.
-      </h1>
-      <p className="mt-3 max-w-xl text-lg text-moss">
-        Administrasi mengajar Anda dibangun berurutan. Setiap tahap memakai hasil tahap sebelumnya.
-      </p>
-
-      <ol className="mt-12 border-l-4 border-mist">
-        {alur.map((a, i) => (
-          <li key={a.judul} className="relative pb-10 pl-8 last:pb-0">
-            <span
-              className={`absolute -left-[14px] top-1 grid h-6 w-6 place-items-center rounded-full text-xs font-bold ${
-                i === 0 ? "bg-chalk text-ink" : "bg-mist text-moss"
-              }`}
-            >
-              {i + 1}
-            </span>
-            <h2 className="font-display text-xl font-semibold">{a.judul}</h2>
-            <p className="mt-1 max-w-lg text-moss">{a.isi}</p>
-            <p className="mt-2 text-sm font-semibold text-ink">{a.status}</p>
-          </li>
-        ))}
-      </ol>
-    </div>
+        <aside>
+          <h2 className="font-display text-2xl font-semibold">Alur kerja</h2>
+          <ol className="mt-4 border-l-4 border-mist">
+            {alur.map((a, i) => (
+              <li key={a.judul} className="relative pb-8 pl-8 last:pb-0">
+                <span
+                  className={`absolute -left-[14px] top-1 grid h-6 w-6 place-items-center rounded-full text-xs font-bold ${
+                    i === 0 ? "bg-chalk text-ink" : "bg-mist text-moss"
+                  }`}
+                >
+                  {i + 1}
+                </span>
+                <Link to={a.to} className="font-display text-lg font-semibold hover:underline">
+                  {a.judul}
+                </Link>
+                <p className="mt-1 text-moss">{a.isi}</p>
+              </li>
+            ))}
+          </ol>
+        </aside>
+      </div>
+    </>
   );
 }

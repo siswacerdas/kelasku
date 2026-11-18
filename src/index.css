@@ -10,13 +10,39 @@
   --font-sans: "Public Sans", ui-sans-serif, system-ui, sans-serif;
 }
 
+/*
+ * SKALA LAYAR (LAYOUT-3): semua ukuran memakai rem, jadi menaikkan font root
+ * membuat seluruh antarmuka ikut membesar di monitor resolusi tinggi.
+ * Satuan rem pada media query selalu dihitung dari 16px, bukan dari nilai di bawah.
+ */
+html { font-size: 100%; -webkit-text-size-adjust: 100%; }
+@media (min-width: 120rem) { html { font-size: 112.5%; } } /* >= 1920px */
+@media (min-width: 160rem) { html { font-size: 125%; } }   /* >= 2560px */
+
 body {
   background: var(--color-paper);
   color: var(--color-ink);
   font-family: var(--font-sans);
+  min-height: 100dvh;
 }
 
 :focus-visible {
   outline: 3px solid var(--color-chalk);
   outline-offset: 2px;
+}
+
+/* Motif khas Kelasku: garis buku tulis. Tinggi baris = 2.25rem agar teks sejajar garis. */
+.garis-buku {
+  line-height: 2.25rem;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent calc(2.25rem - 1px),
+    var(--color-mist) calc(2.25rem - 1px),
+    var(--color-mist) 2.25rem
+  );
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
 }

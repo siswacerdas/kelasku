@@ -20,7 +20,7 @@ Semua di bawah `workspaces/{ws}`; `ws` = uid guru untuk ruang kerja pribadi.
 workspaces/{ws}            name, ownerId, plan, school{nama, alamat, kepalaSekolah}, activeYear{label, semester}
   members/{uid}            role: owner | teacher | student
   classes/{id}             name ("5A"), grade (5), fase ("C"), yearLabel
-  students/{id}            classId, name, nis            ← data minimal; data anak dijaga ketat
+  students/{id}            classId, name, nis, nisn, gender (L/P)  ← data minimal; data anak dijaga ketat (DATA-3)
   subjects/{id}            name                          ← guru kelas SD: banyak mapel per kelas
   objectives/{id}          subjectId, grade, semester, text (tujuan pembelajaran)
   plans/{id}               classId, subjectId, objectiveIds[], isi rencana, status: draft | final

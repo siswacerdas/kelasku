@@ -24,6 +24,12 @@ Tujuan: hal yang sudah benar tidak rusak lagi saat menambah fitur. Dibaca sebelu
 - **LAYOUT-4** Paragraf tidak melebihi sekitar 65–75 karakter per baris; lebar tambahan dipakai untuk kolom lain, bukan memanjangkan teks.
 - **LAYOUT-5** Semua kontrol bisa disentuh (tinggi minimal sekitar 44px) dan fokus keyboard terlihat.
 
+### Kelas dan siswa
+- **KELAS-1** Template yang diunduh aplikasi harus terbaca kembali oleh pembaca impor (diuji otomatis). Mengubah judul kolom template atau daftar `ALIASES` di `importParser.ts` wajib disertai pembaruan uji dan `npm test` hijau.
+- **KELAS-2** Impor tidak pernah menyimpan baris bermasalah diam-diam: baris dengan galat (nama kosong, NIS ganda, NIS sudah ada) dilewati dan ditampilkan di pratinjau; penyimpanan hanya setelah guru menekan konfirmasi.
+- **DATA-2** Menghapus kelas kini menghapus siswanya. Saat `plans`, `assessments`, atau `scores` mulai merujuk kelas/siswa, `deleteClass` dan `deleteStudent` WAJIB diubah untuk memeriksa keterkaitan dulu (jangan sampai nilai yatim).
+- **DATA-3** Data siswa dibatasi pada nama, NIS, NISN, jenis kelamin. Menambah kolom pribadi baru butuh alasan tertulis di changelog.
+
 ### Penayangan
 - **DEPLOY-1** `public/.htaccess` ikut terbawa ke `dist/`; refresh di rute dalam (mis. `/app/kelas`) tidak menghasilkan 404.
 - **DEPLOY-2** Semua `VITE_FIREBASE_*` terisi di GitHub Secrets; `package-lock.json` ter-commit.
@@ -37,6 +43,7 @@ Uji lebar: **360, 390, 768, 1366, 1920, 2560 px** (DevTools → ikon perangkat �
 - [ ] Memakai `PageHeader` dan pola kolom dari `docs/DESAIN.md`
 - [ ] Keadaan kosong, memuat, dan error sudah dirancang (bukan hanya keadaan terisi)
 - [ ] Koleksi data baru sudah ada di `firestore.rules` (RULES-2)
+- [ ] `npm test` hijau dan `npm run build` lolos
 - [ ] Entri `CHANGELOG.md` + baris "Cek ulang" ditulis
 
 ## Riwayat regresi

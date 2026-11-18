@@ -4,6 +4,7 @@ import AppShell from "./components/AppShell";
 import LoginPage from "./pages/LoginPage";
 import DashboardPage from "./pages/DashboardPage";
 import PlaceholderPage from "./pages/PlaceholderPage";
+import KelasPage from "./pages/KelasPage";
 
 function RequireAuth({ children }: { children: React.ReactElement }) {
   const { user, loading } = useAuth();
@@ -24,7 +25,7 @@ export default function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/app" element={<RequireAuth><AppShell /></RequireAuth>}>
             <Route index element={<DashboardPage />} />
-            <Route path="kelas" element={ph("Kelas & siswa", "Data induk yang dipakai semua dokumen.", ["Daftar kelas dan tahun ajaran", "Daftar siswa per kelas", "Mata pelajaran yang Anda ampu"])} />
+            <Route path="kelas" element={<KelasPage />} />
             <Route path="perencanaan/tujuan" element={ph("Tujuan pembelajaran", "Capaian dan tujuan pembelajaran per mata pelajaran.", ["Pilih atau tulis tujuan pembelajaran", "Kelompokkan per semester"])} />
             <Route path="perencanaan/rencana" element={ph("Rencana pembelajaran", "Rancangan pembelajaran untuk satu topik.", ["Identitas dan tujuan", "Pemahaman bermakna dan pertanyaan pemantik", "Pengalaman belajar"])} />
             <Route path="perencanaan/modul" element={ph("Modul ajar", "Disusun dari rencana pembelajaran.", ["Susunan otomatis dari rencana", "Ekspor ke Word dan PDF"])} />

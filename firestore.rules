@@ -1,0 +1,51 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedIn() { return request.auth != null; }
+
+    function memberPath(ws, uid) {
+      return /databases/$(database)/documents/workspaces/$(ws)/members/$(uid);
+    }
+    function isMember(ws) { return signedIn() && exists(memberPath(ws, request.auth.uid)); }
+    function isOwner(ws) {
+      return isMember(ws) && get(memberPath(ws, request.auth.uid)).data.role == 'owner';
+    }
+
+    // Profil pribadi
+    match /users/{uid} {
+      allow read, write: if signedIn() && request.auth.uid == uid;
+    }
+
+    match /workspaces/{ws} {
+      allow read: if isMember(ws);
+      // Hanya boleh membuat ruang kerja pribadi (id = uid), paket awal selalu 'free'
+      allow create: if signedIn() && ws == request.auth.uid
+                    && request.resource.data.ownerId == request.auth.uid
+                    && request.resource.data.plan == 'free';
+      // Pemilik tidak boleh mengubah paket/pemilik sendiri (diurus lewat Cloud Functions nanti)
+      allow update: if isOwner(ws)
+                    && request.resource.data.plan == resource.data.plan
+                    && request.resource.data.ownerId == resource.data.ownerId;
+      allow delete: if false;
+
+      match /members/{uid} {
+        allow read: if isMember(ws);
+        // Pembuatan pertama (batch bersama workspace): getAfter membaca kondisi setelah batch
+        allow create: if signedIn() && uid == request.auth.uid
+                      && getAfter(/databases/$(database)/documents/workspaces/$(ws)).data.ownerId == request.auth.uid
+                      && request.resource.data.role == 'owner';
+        allow update, delete: if isOwner(ws) && uid != request.auth.uid;
+      }
+
+      // Data kerja guru
+      match /{coll}/{docId} {
+        allow read, write: if isMember(ws)
+          && coll in ['classes', 'plans', 'modules', 'assessments', 'scores'];
+      }
+    }
+
+    // Selain yang diizinkan di atas: tolak semua
+    match /{document=**} { allow read, write: if false; }
+  }
+}

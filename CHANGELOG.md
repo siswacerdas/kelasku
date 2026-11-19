@@ -3,6 +3,24 @@
 Aturan: setiap fase penting atau perbaikan mencatat **Ditambah / Diubah / Diperbaiki** dan **Cek ulang**
 (ID dari `docs/ANTI-REGRESI.md` yang harus diuji ulang setelah perubahan ini). Entri terbaru di atas.
 
+## [0.7.0] – 2026-11-18 – Tangga pertemuan (scaffolding) per TP per rombel
+**Ide visual halaman**: lembar kerja panjang yang mengikuti Blok 0-3 buku saku, dengan "peta keputusan kelas" dan telaah mutu menetap di rel kanan (mulai 1760 px) sehingga guru melihat langsung bagaimana profil kelasnya memengaruhi tangga yang ia susun.
+
+**Ditambah**
+- `/app/perencanaan/tangga` (menu **Tangga pertemuan**): pilih rombel, lihat TP kelas itu (hanya TP berstatus siap yang bisa dimulai), lalu susun tangga. Satu dokumen per pasangan TP dan rombel (`scaffolds/{tpId}_{classId}`), sehingga 5A dan 5B bisa berbeda.
+- Editor mengikuti Buku Saku Scaffolding Bagian IX: analisis TP (arti KKO, bukti, yang bukan termasuk, prasyarat, materi terpilih dan alasan, konten WAJIB/PILIHAN), diagnostik awal, minimal dua alternatif (bertahap tunggal, kontras berpasangan, lainnya) beserta rasional "cocok jika ...", tangga berbobot (wajib, ideal, pengayaan) lengkap dengan panduan langkah pertama, uji validitas tiga pertanyaan, pertemuan inti, bentuk rangsangan, objek pengamatan, JP per pertemuan.
+- Telaah mutu (`features/scaffold/model.ts`, 18 uji) dengan kode SC-00 s.d. SC-23: kolom wajib, minimal 2 alternatif, Peta Keputusan profil (kelas heterogen perlu alternatif bertahap tunggal; kesenjangan signifikan melarang rangsangan pribadi; sekolah minim lahan melarang objek luar kelas; fasilitas digital terbatas menolak media digital; siswa kurang percaya diri butuh tangga kelompok kecil), bantuan yang harus menyusut (1H), kriteria kualitatif (1F), kecukupan JP, kesesuaian bentuk asesmen dengan KKO, dan deteksi profil yang berubah sejak tangga disusun.
+- Kerangka awal otomatis: dua alternatif dan pertemuan inti terisi dari TP.
+
+**Diubah**
+- `firestore.rules`: koleksi `scaffolds` ditambahkan. **Rules harus dipublikasikan ulang.**
+
+**Cek ulang**: SC-1, SC-2, PROFIL-1, PROFIL-2, DATA-1, RULES-2, LAYOUT-1 s.d. LAYOUT-6 pada `/app/perencanaan/tangga` (terutama editor di 360 px, 1280 px, dan 1920 px).
+
+**Utang yang diketahui**: profil spesifik-TP "akses lahan/kebun" (Bagian I.3) belum ditanyakan; sementara dicakup oleh isian "Objek pengamatan". Panduan refleksi pasca-pembelajaran (Bagian X) belum ada. Uji 1I (siklus lintas fase) dan 1J (tumpang tindih mapel) belum dikode karena butuh pertimbangan guru atau AI.
+
+**Keputusan yang diambil**: pelanggaran Peta Keputusan yang bersifat larangan keras di buku saku (rangsangan pribadi saat kesenjangan signifikan) berstatus error; yang bersifat anjuran (media digital, objek luar kelas) berstatus saran, karena guru bisa saja lebih tahu kondisi kelasnya, dan koreksi yang benar adalah memperbarui jawaban profil.
+
 ## [0.6.0] – 2026-11-18 – Alur tujuan pembelajaran (ATP)
 **Ide visual halaman**: papan dua kolom per kelas dalam satu fase (fondasi proses di kelas awal, penguatan di kelas akhir), TP berkode 5.1, 5.2 agar relasi prasyarat terbaca seperti nomor pasal; telaah alur dan rekap JP duduk di rel kanan pada layar sangat lebar.
 

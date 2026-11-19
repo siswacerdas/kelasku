@@ -8,6 +8,7 @@ import KelasPage from "./pages/KelasPage";
 import CpPage from "./pages/CpPage";
 import TujuanPage from "./pages/TujuanPage";
 import AlurPage from "./pages/AlurPage";
+import TanggaPage from "./pages/TanggaPage";
 import PengaturanPage from "./pages/PengaturanPage";
 
 function RequireAuth({ children }: { children: React.ReactElement }) {
@@ -33,6 +34,7 @@ export default function App() {
             <Route path="perencanaan/cp" element={<CpPage />} />
             <Route path="perencanaan/tujuan" element={<TujuanPage />} />
             <Route path="perencanaan/alur" element={<AlurPage />} />
+            <Route path="perencanaan/tangga" element={<TanggaPage />} />
             <Route path="perencanaan/rencana" element={ph("Rencana pembelajaran", "Rancangan pembelajaran untuk satu topik.", ["Identitas dan tujuan", "Pemahaman bermakna dan pertanyaan pemantik", "Pengalaman belajar"])} />
             <Route path="perencanaan/modul" element={ph("Modul ajar", "Disusun dari rencana pembelajaran.", ["Susunan otomatis dari rencana", "Ekspor ke Word dan PDF"])} />
             <Route path="asesmen" element={ph("Asesmen", "Soal, rubrik, dan lembar observasi.", ["Instrumen terhubung ke tujuan pembelajaran"])} />

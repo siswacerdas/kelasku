@@ -40,6 +40,8 @@ Tujuan: hal yang sudah benar tidak rusak lagi saat menambah fitur. Dibaca sebelu
 - **ATP-1** Urutan dan kode TP (`5.1`, `5.2`, ...) harus stabil: TP yang belum diurutkan ditaruh paling akhir, urutan seri selalu menghasilkan hasil yang sama (uji `sortTps`, `labelMap`).
 - **ATP-2** Relasi prasyarat tidak boleh meloloskan urutan terbalik, prasyarat diri sendiri, atau lingkaran. Aturan telaah alur baru ditulis sebagai kode ATP-nn, lengkap dengan uji dan rujukan Bagian buku saku.
 - **DATA-1 (tambahan)** Penyusun TP hanya menulis bidang TP lewat `toStoredFields`; bidang `atp`, `id`, dan `status` tidak boleh ikut tertulis dari salinan lama. Menambah bidang TP baru berarti menambahkannya ke `toStoredFields` dan ke uji.
+- **SC-1** Contoh tangga lengkap (`lengkap()` di `scaffold/model.test.ts`) harus selalu lolos telaah tanpa error dan saran. Aturan baru wajib menjaga uji ini hijau.
+- **SC-2** Aturan telaah yang bersumber dari Peta Keputusan (SC-08, SC-17, SC-18, SC-22, SC-23) membaca jawaban dari `profile.ts` (satu-satunya sumber, PROFIL-1). Dilarang menduplikasi aturan pemetaan di tempat lain. Satu dokumen tangga per pasangan TP dan rombel (id `tpId_classId`); jangan mengubah pola id tanpa migrasi (DATA-1).
 - **SET-1** Menyimpan pengaturan tidak boleh mengubah `plan` atau `ownerId` (dijaga rules; uji manual setelah mengubah `firestore.rules`).
 
 ### Pengembangan lokal

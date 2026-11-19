@@ -61,3 +61,14 @@ ATP tidak dibuat sebagai koleksi terpisah. Datanya melekat pada dokumen TP agar 
 tp/{id}.atp = { urutan, alasan, prasyarat[tp id], kontinuitas: tuntas | diperdalam, catatan }
 ```
 Alur satu fase = semua TP dengan `mapelId` yang sama dan `grade` dalam fase itu. Koleksi `atp/{id}` pada rencana 0.4.0 tidak dipakai.
+
+## Revisi 0.7.0: tangga pertemuan
+```
+scaffolds/{tpId}_{classId}   analisis{kkoMakna, buktiTercapai, bukanTermasuk, prasyarat, materiTerpilih, alasanMateri, konten[]},
+                             diagnostik{tugas, caraMembaca, keputusanAwal},
+                             alternatif[{nama, jenis, rasional, uji{sederhana,fondasi,cukup}, tangga[{kompetensi, materi, mengapa,
+                               tandaBerhasil, bobot, bantuan, skala, media, persiapanGuru, kalimatPembuka, diamati, jikaBelum}]}],
+                             inti{kompetensi, materiPuncak, bentukAsesmen, instrumen}, rangsangan, objekPengamatan,
+                             jpPerPertemuan, profilHash, status
+```
+`profilHash` menyimpan ringkasan jawaban profil saat tangga terakhir disimpan; bila profil berubah, telaah memberi peringatan SC-07. Koleksi `rpm` (berikutnya) akan merujuk satu tangga (`scaffoldId`) dan satu pertemuan di dalamnya.

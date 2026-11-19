@@ -41,7 +41,7 @@ service cloud.firestore {
       // Data kerja guru
       match /{coll}/{docId} {
         allow read, write: if isMember(ws)
-          && coll in ['classes', 'students', 'subjects', 'objectives', 'tp', 'plans', 'modules', 'assessments', 'scores'];
+          && coll in ['classes', 'students', 'subjects', 'objectives', 'tp', 'scaffolds', 'plans', 'modules', 'assessments', 'scores'];
       }
     }
 

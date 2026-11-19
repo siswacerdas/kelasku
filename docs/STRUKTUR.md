@@ -54,3 +54,10 @@ scaffolds/{id}                tangga pertemuan per TP, minimal 2 alternatif, ber
 rpm/{id}                      satu RPM per pertemuan: A-D terstruktur (bukan teks bebas) agar dapat divalidasi
 ```
 Prinsip: RPM disimpan sebagai data terstruktur (baris kegiatan dengan waktu, tabel adaptasi, kriteria tiga tingkat, rubrik), sehingga ceklis mutu dapat dijalankan otomatis dan dokumen resmi (Word) dibuat dari data, bukan sebaliknya.
+
+## Revisi 0.6.0: ATP
+ATP tidak dibuat sebagai koleksi terpisah. Datanya melekat pada dokumen TP agar relasi (prasyarat, urutan) tidak bisa yatim dari TP-nya:
+```
+tp/{id}.atp = { urutan, alasan, prasyarat[tp id], kontinuitas: tuntas | diperdalam, catatan }
+```
+Alur satu fase = semua TP dengan `mapelId` yang sama dan `grade` dalam fase itu. Koleksi `atp/{id}` pada rencana 0.4.0 tidak dipakai.

@@ -24,7 +24,25 @@ export type TpFields = {
   tidakDipakai: string;
   uji: Record<UjiKey, UjiAnswer>;
 };
-export type TpDoc = TpFields & { id: string; status: "draf" | "siap" };
+/** Data ATP yang melekat pada TP (Buku Saku CP-ATP-TP Bagian VII): urutan, relasi, kontinuitas. */
+export type AtpData = {
+  urutan: number; // 0 = belum diurutkan
+  alasan: string; // alasan penempatan di kelas awal/akhir fase
+  prasyarat: string[]; // id TP yang harus tuntas lebih dulu
+  kontinuitas: "tuntas" | "diperdalam"; // diperdalam = diulang/diperdalam lintas kelas
+  catatan: string; // apa yang diulang/diperdalam
+};
+export const emptyAtp = (): AtpData => ({ urutan: 0, alasan: "", prasyarat: [], kontinuitas: "tuntas", catatan: "" });
+export type TpDoc = TpFields & { id: string; status: "draf" | "siap"; atp?: Partial<AtpData> };
+
+/** Hanya bidang TP yang boleh ditulis oleh penyusun TP; id, status, dan atp dijaga agar tidak tertimpa salinan lama (DATA-1). */
+export function toStoredFields(t: TpFields): TpFields {
+  return {
+    mapelId: t.mapelId, grade: t.grade, cpElemen: t.cpElemen, semester: t.semester,
+    kko: t.kko, objek: t.objek, konten: t.konten, bukti: t.bukti, jp: t.jp,
+    tahapan: t.tahapan, caraAsesmen: t.caraAsesmen, tidakDipakai: t.tidakDipakai, uji: t.uji,
+  };
+}
 
 export type Issue = { code: string; level: "error" | "warn" | "info"; message: string };
 

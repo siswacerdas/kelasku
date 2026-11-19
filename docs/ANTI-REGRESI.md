@@ -22,6 +22,7 @@ Tujuan: hal yang sudah benar tidak rusak lagi saat menambah fitur. Dibaca sebelu
 - **LAYOUT-2** Isi tidak tertutup menu bawah di HP (ruang bawah cukup, termasuk area aman iPhone).
 - **LAYOUT-3** Pada 1920px dan 2560px isi mengisi area kerja: tidak ada ruang kosong lebar di kiri-kanan, dan ukuran teks/kontrol tidak terlihat kecil.
 - **LAYOUT-4** Paragraf tidak melebihi sekitar 65–75 karakter per baris; lebar tambahan dipakai untuk kolom lain, bukan memanjangkan teks.
+- **LAYOUT-6** Pola tiga zona untuk halaman padat (papan + rel samping) memakai `min-[110rem]` (1760 px), bukan `2xl`, agar kolom tidak menyempit di 1536 px.
 - **LAYOUT-5** Semua kontrol bisa disentuh (tinggi minimal sekitar 44px) dan fokus keyboard terlihat.
 
 ### Kelas dan siswa
@@ -36,6 +37,9 @@ Tujuan: hal yang sudah benar tidak rusak lagi saat menambah fitur. Dibaca sebelu
 - **PROFIL-2** Setiap keputusan yang ditampilkan atau dipakai harus menyebut asalnya: jawaban guru atau asumsi default.
 - **TP-1** Contoh terisi di Buku Saku CP-ATP-TP Bagian V (uji `baik()` di `tp/model.test.ts`) harus selalu lolos telaah tanpa error dan saran. Mengubah aturan telaah wajib menjaga uji ini hijau, atau menjelaskan di changelog mengapa buku saku yang berubah.
 - **TP-2** Status "Siap" tidak boleh dapat dipilih selama ada temuan tingkat error. Aturan baru ditulis sebagai kode TP-nn, lengkap dengan uji, dan sumbernya (bagian buku saku) dicatat di komentar.
+- **ATP-1** Urutan dan kode TP (`5.1`, `5.2`, ...) harus stabil: TP yang belum diurutkan ditaruh paling akhir, urutan seri selalu menghasilkan hasil yang sama (uji `sortTps`, `labelMap`).
+- **ATP-2** Relasi prasyarat tidak boleh meloloskan urutan terbalik, prasyarat diri sendiri, atau lingkaran. Aturan telaah alur baru ditulis sebagai kode ATP-nn, lengkap dengan uji dan rujukan Bagian buku saku.
+- **DATA-1 (tambahan)** Penyusun TP hanya menulis bidang TP lewat `toStoredFields`; bidang `atp`, `id`, dan `status` tidak boleh ikut tertulis dari salinan lama. Menambah bidang TP baru berarti menambahkannya ke `toStoredFields` dan ke uji.
 - **SET-1** Menyimpan pengaturan tidak boleh mengubah `plan` atau `ownerId` (dijaga rules; uji manual setelah mengubah `firestore.rules`).
 
 ### Pengembangan lokal

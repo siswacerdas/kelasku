@@ -3,6 +3,22 @@
 Aturan: setiap fase penting atau perbaikan mencatat **Ditambah / Diubah / Diperbaiki** dan **Cek ulang**
 (ID dari `docs/ANTI-REGRESI.md` yang harus diuji ulang setelah perubahan ini). Entri terbaru di atas.
 
+## [0.6.0] – 2026-11-18 – Alur tujuan pembelajaran (ATP)
+**Ide visual halaman**: papan dua kolom per kelas dalam satu fase (fondasi proses di kelas awal, penguatan di kelas akhir), TP berkode 5.1, 5.2 agar relasi prasyarat terbaca seperti nomor pasal; telaah alur dan rekap JP duduk di rel kanan pada layar sangat lebar.
+
+**Ditambah**
+- `/app/perencanaan/alur`: pilih mata pelajaran dan fase; atur urutan (naik/turun), pindah TP antar kelas dalam fase, tulis alasan penempatan, tandai prasyarat, dan tandai TP yang perlu diulang atau diperdalam lintas kelas beserta catatannya.
+- Telaah alur (`features/atp/model.ts`, 11 uji): alasan penempatan, semua TP menumpuk di satu kelas, prasyarat yang urutannya lebih akhir (error), prasyarat diri sendiri dan lingkaran prasyarat (error), prasyarat yang sudah dihapus, pendalaman tanpa catatan, elemen CP yang belum punya TP, jumlah TP draf.
+- Rekap JP per elemen dan per kelas (Buku Saku Bagian VIII), termasuk baris TP mandiri.
+
+**Diubah**
+- Data ATP disimpan di dalam dokumen TP (`atp`: urutan, alasan, prasyarat, kontinuitas, catatan), bukan koleksi terpisah; **tidak ada perubahan rules**.
+- Penyimpanan TP kini hanya menulis bidang TP (`toStoredFields`), sehingga mengubah TP tidak menimpa data ATP dengan salinan lama (DATA-1; diuji).
+
+**Cek ulang**: ATP-1, ATP-2, DATA-1, TP-1, TP-2, LAYOUT-1 s.d. LAYOUT-5 pada `/app/perencanaan/alur` (papan dua kolom di 1280 px; rel kanan di 1760 px ke atas).
+
+**Keputusan yang diambil**: satu alur bersama per fase (kedua kelas dalam satu papan), mengikuti Bagian VII yang menekankan pembagian antar kelas dalam satu fase. Kelas awal dan akhir ditentukan oleh `grade` pada TP, jadi memindahkan TP antar kelas juga mengubah kelas TP itu.
+
 ## [0.5.0] – 2026-11-18 – Tujuan pembelajaran dengan telaah mutu
 **Ide visual halaman**: TP tampil sebagai lembar kerja bergaris dengan rumusan kompetensi tersusun otomatis dari empat bagian, dan "telaah mutu" yang menemani seperti rekan sejawat (temuan dengan alasan), bukan daftar centang kaku.
 

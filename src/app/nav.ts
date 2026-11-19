@@ -10,6 +10,7 @@ export const navGroups: NavGroup[] = [
     items: [
       { to: "/app/perencanaan/cp", label: "Bank CP" },
       { to: "/app/perencanaan/tujuan", label: "Tujuan pembelajaran" },
+      { to: "/app/perencanaan/alur", label: "Alur (ATP)" },
       { to: "/app/perencanaan/rencana", label: "Rencana pembelajaran" },
       { to: "/app/perencanaan/modul", label: "Modul ajar" },
     ],

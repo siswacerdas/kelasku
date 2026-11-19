@@ -23,3 +23,4 @@ Bukan dasbor SaaS. Rujukannya adalah buku induk dan buku tulis: kepala halaman b
 - **Teks bacaan**: dibatasi `max-w-[65ch]`; sisa lebar dipakai panel samping atau kolom ringkasan.
 - **HP**: satu kolom, aksi utama di dasar layar atau di bawah judul, tabel lebar dibungkus `overflow-x-auto` di dalam wadahnya sendiri, ruang bawah `pb-28` karena menu bawah.
 - **Tabel input nilai** (halaman paling padat): di PC tabel penuh dengan kepala tetap; di HP berubah menjadi daftar per siswa.
+- **Halaman padat dengan rel samping** (mis. papan alur + telaah + rekap): kolom utama tetap penuh sampai `min-[110rem]` (1760 px), baru rel samping (28rem) muncul di kanan; di bawah itu rel berada di bawah papan. Jangan memakai `2xl` untuk memisahkan rel pada halaman yang memiliki dua kolom isi, karena kolom menyempit di 1536 px.

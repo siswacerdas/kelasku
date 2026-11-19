@@ -1,7 +1,7 @@
 import { addDoc, collection, deleteDoc, doc, onSnapshot, serverTimestamp, updateDoc } from "firebase/firestore";
 import { db } from "../../lib/firebase";
 import type { TpDoc, TpFields } from "./model";
-import { emptyTp } from "./model";
+import { emptyTp, toStoredFields } from "./model";
 
 const col = (ws: string) => collection(db, "workspaces", ws, "tp");
 
@@ -23,7 +23,7 @@ export function subscribeTp(ws: string, cb: (t: TpDoc[]) => void, onError: () =>
 const clean = (t: TpFields): TpFields => ({ ...t, tahapan: t.tahapan.map((s) => s.trim()).filter(Boolean), kko: t.kko.trim(), objek: t.objek.trim(), konten: t.konten.trim(), bukti: t.bukti.trim(), caraAsesmen: t.caraAsesmen.trim(), tidakDipakai: t.tidakDipakai.trim() });
 
 export async function saveTp(ws: string, id: string | null, t: TpFields, status: TpDoc["status"]): Promise<string> {
-  const data = { ...clean(t), status, updatedAt: serverTimestamp() };
+  const data = { ...clean(toStoredFields(t)), status, updatedAt: serverTimestamp() };
   if (id) {
     await updateDoc(doc(db, "workspaces", ws, "tp", id), data);
     return id;

@@ -6,6 +6,7 @@ import type { ClassDoc, StudentDoc } from "../features/kelas/types";
 import ClassForm from "../features/kelas/ClassForm";
 import StudentList from "../features/kelas/StudentList";
 import AddStudentsPanel from "../features/kelas/AddStudentsPanel";
+import ClassProfile from "../features/profil/ClassProfile";
 
 const btn = "rounded-lg border-2 border-ink px-4 py-2.5 font-semibold hover:bg-mist";
 
@@ -119,6 +120,8 @@ export default function KelasPage() {
                   )}
                 </div>
               </div>
+
+              <ClassProfile key={selected.id} ws={ws} cls={selected} />
 
               {/* Layar sangat lebar: daftar di kiri, panel tambah siswa tetap di kanan. */}
               <div className="mt-8 grid gap-8 2xl:grid-cols-[minmax(0,1fr)_28rem]">

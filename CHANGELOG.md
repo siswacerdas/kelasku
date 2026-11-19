@@ -3,6 +3,23 @@
 Aturan: setiap fase penting atau perbaikan mencatat **Ditambah / Diubah / Diperbaiki** dan **Cek ulang**
 (ID dari `docs/ANTI-REGRESI.md` yang harus diuji ulang setelah perubahan ini). Entri terbaru di atas.
 
+## [0.4.0] – 2026-11-18 – Fondasi perencanaan: Bank CP, profil konteks, Pengaturan
+**Ide visual halaman**: Bank CP menampilkan CP Fase A, B, C berdampingan dalam kolom (progresi terbaca sekilas), bukan kartu; profil konteks memperlihatkan dampak tiap jawaban di bawah pilihannya, bukan formulir pasif.
+
+**Ditambah**
+- `/app/perencanaan/cp` Bank CP: 16 mata pelajaran, 67 elemen (termasuk ISMUBA, sumber ditandai terpisah), cari lintas CP, filter fase, salin teks CP. Data statis dimuat dinamis (`src/data/cp.json`).
+- Profil konteks dan Peta Keputusan (Buku Saku Scaffolding Bagian I.2 dan II): 2 variabel tingkat sekolah (di Pengaturan) dan 3 variabel tingkat kelas (di Kelas & siswa). "Tidak tahu" langsung memakai default konservatif dan ditandai asumsi.
+- `/app/pengaturan`: data sekolah dan guru untuk kop dan blok pengesahan dokumen (dipakai saat ekspor RPM), profil sekolah, tampilan paket.
+- `docs/PROTOKOL.md`: terjemahan Buku Saku (CP-ATP-TP, Scaffolding, RPM v3) ke aturan sistem, pembagian aturan kode vs AI, dan temuan ketidakkonsistenan pada dokumen sumber.
+- Uji otomatis baru: integritas data CP dan Peta Keputusan (total 21 uji).
+
+**Diubah**
+- Menu Perencanaan memuat Bank CP. `tsconfig` mengaktifkan `resolveJsonModule`. Dokumen kelas boleh memuat `profile`; dokumen ruang kerja memuat `school`, `teacher`, `profile`.
+
+**Cek ulang**: CP-1, PROFIL-1, PROFIL-2, SET-1, AUTH-2, RULES-1, LAYOUT-1 s.d. LAYOUT-5 pada `/app/perencanaan/cp`, `/app/pengaturan`, dan `/app/kelas`.
+
+**Utang yang diketahui**: logo sekolah belum ada (diunggah saat ekspor dokumen dibangun); JP per mata pelajaran belum dikumpulkan (menunggu tahap TP/ATP); teks CP pada `cp.json` bersumber dari berkas guru dan belum diverifikasi ke dokumen resmi.
+
 ## [0.3.0] – 2026-11-18 – Kelas & siswa
 **Ide visual halaman**: daftar absen bergaris seperti buku induk (baris bernomor, bukan kartu); kelas sebagai tab di HP dan daftar tegak di PC lebar; panel tambah siswa menetap di kanan pada layar ≥1536px.
 

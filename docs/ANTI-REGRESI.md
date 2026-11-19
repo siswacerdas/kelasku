@@ -30,6 +30,12 @@ Tujuan: hal yang sudah benar tidak rusak lagi saat menambah fitur. Dibaca sebelu
 - **DATA-2** Menghapus kelas kini menghapus siswanya. Saat `plans`, `assessments`, atau `scores` mulai merujuk kelas/siswa, `deleteClass` dan `deleteStudent` WAJIB diubah untuk memeriksa keterkaitan dulu (jangan sampai nilai yatim).
 - **DATA-3** Data siswa dibatasi pada nama, NIS, NISN, jenis kelamin. Menambah kolom pribadi baru butuh alasan tertulis di changelog.
 
+### Perencanaan
+- **CP-1** `src/data/cp.json` adalah data acuan: 16 mapel, 67 elemen, tiap elemen berteks untuk setiap fase mapelnya, sumber KM 2025 dan ISMUBA 2024 tidak tercampur. Mengubahnya wajib disertai sumber di changelog dan `npm test` hijau.
+- **PROFIL-1** Peta Keputusan (`profile.ts`) harus identik dengan Buku Saku Scaffolding Bagian II. Default "Tidak tahu": lokasi A, digital B, kemampuan B, kesenjangan A, percayaDiri B. Mengubahnya butuh alasan di changelog dan uji yang diperbarui.
+- **PROFIL-2** Setiap keputusan yang ditampilkan atau dipakai harus menyebut asalnya: jawaban guru atau asumsi default.
+- **SET-1** Menyimpan pengaturan tidak boleh mengubah `plan` atau `ownerId` (dijaga rules; uji manual setelah mengubah `firestore.rules`).
+
 ### Penayangan
 - **DEPLOY-1** `public/.htaccess` ikut terbawa ke `dist/`; refresh di rute dalam (mis. `/app/kelas`) tidak menghasilkan 404.
 - **DEPLOY-2** Semua `VITE_FIREBASE_*` terisi di GitHub Secrets; `package-lock.json` ter-commit.

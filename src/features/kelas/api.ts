@@ -5,6 +5,7 @@ import { db } from "../../lib/firebase";
 import type { ClassDoc, Fase, StudentDoc } from "./types";
 import { collator, faseForGrade } from "./types";
 import type { StudentInput } from "./importParser";
+import type { Profile } from "../profil/profile";
 
 const col = (ws: string, name: string) => collection(db, "workspaces", ws, name);
 const CHUNK = 400; // batas aman di bawah 500 operasi per batch
@@ -74,3 +75,6 @@ export async function addStudents(ws: string, classId: string, list: StudentInpu
 export const updateStudent = (ws: string, id: string, s: StudentInput) =>
   updateDoc(doc(db, "workspaces", ws, "students", id), { ...s });
 export const deleteStudent = (ws: string, id: string) => deleteDoc(doc(db, "workspaces", ws, "students", id));
+
+export const updateClassProfile = (ws: string, id: string, profile: Profile) =>
+  updateDoc(doc(db, "workspaces", ws, "classes", id), { profile });

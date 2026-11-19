@@ -8,6 +8,7 @@ export const navGroups: NavGroup[] = [
   {
     title: "Perencanaan",
     items: [
+      { to: "/app/perencanaan/cp", label: "Bank CP" },
       { to: "/app/perencanaan/tujuan", label: "Tujuan pembelajaran" },
       { to: "/app/perencanaan/rencana", label: "Rencana pembelajaran" },
       { to: "/app/perencanaan/modul", label: "Modul ajar" },

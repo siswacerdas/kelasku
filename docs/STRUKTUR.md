@@ -39,3 +39,18 @@ Setiap koleksi baru wajib masuk `firestore.rules` (RULES-2).
 ## Jalur ke LMS
 Kelas dan siswa yang sama dipakai LMS: siswa punya akun yang ditautkan ke `students/{id}`; modul "diterbitkan" ke kelas;
 asesmen dikerjakan siswa dan hasilnya langsung masuk `scores`.
+
+## Revisi 0.4.0: model perencanaan (setelah mempelajari Buku Saku)
+Model awal (`objectives` berisi teks) terlalu sederhana. Arah berikutnya, dibangun bertahap dan tiap koleksi baru wajib masuk `firestore.rules` (RULES-2):
+```
+src/data/cp.json              Bank CP (statis, bukan Firestore)
+workspaces/{ws}               + school{...}, teacher{...}, profile{lokasi, digital}     [sudah ada, 0.4.0]
+classes/{id}                  + profile{kemampuan, kesenjangan, percayaDiri}            [sudah ada, 0.4.0]
+cpAnalyses/{id}               bedah CP per elemen: temuan, risiko template, usulan pemisahan
+tp/{id}                       kompetensi operasional (KKO, objek, konten), JP, tahapan proses (>=4),
+                              cara asesmen + yang dihindari, rujukan elemen CP, kelas, status
+atp/{id}                      urutan TP per kelas + relasi (prasyarat, pengulangan lintas kelas)
+scaffolds/{id}                tangga pertemuan per TP, minimal 2 alternatif, berbasis profil
+rpm/{id}                      satu RPM per pertemuan: A-D terstruktur (bukan teks bebas) agar dapat divalidasi
+```
+Prinsip: RPM disimpan sebagai data terstruktur (baris kegiatan dengan waktu, tabel adaptasi, kriteria tiga tingkat, rubrik), sehingga ceklis mutu dapat dijalankan otomatis dan dokumen resmi (Word) dibuat dari data, bukan sebaliknya.

@@ -1,7 +1,9 @@
+import type { Profile } from "../profil/profile";
+
 export type Gender = "" | "L" | "P";
 export type Fase = "A" | "B" | "C";
 
-export type ClassDoc = { id: string; name: string; grade: number; fase: Fase; yearLabel: string };
+export type ClassDoc = { id: string; name: string; grade: number; fase: Fase; yearLabel: string; profile?: Profile };
 export type StudentDoc = { id: string; classId: string; name: string; nis: string; nisn: string; gender: Gender };
 
 /** Fase Kurikulum Merdeka untuk SD: A (kelas 1-2), B (3-4), C (5-6). */

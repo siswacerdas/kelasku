@@ -34,7 +34,13 @@ Tujuan: hal yang sudah benar tidak rusak lagi saat menambah fitur. Dibaca sebelu
 - **CP-1** `src/data/cp.json` adalah data acuan: 16 mapel, 67 elemen, tiap elemen berteks untuk setiap fase mapelnya, sumber KM 2025 dan ISMUBA 2024 tidak tercampur. Mengubahnya wajib disertai sumber di changelog dan `npm test` hijau.
 - **PROFIL-1** Peta Keputusan (`profile.ts`) harus identik dengan Buku Saku Scaffolding Bagian II. Default "Tidak tahu": lokasi A, digital B, kemampuan B, kesenjangan A, percayaDiri B. Mengubahnya butuh alasan di changelog dan uji yang diperbarui.
 - **PROFIL-2** Setiap keputusan yang ditampilkan atau dipakai harus menyebut asalnya: jawaban guru atau asumsi default.
+- **TP-1** Contoh terisi di Buku Saku CP-ATP-TP Bagian V (uji `baik()` di `tp/model.test.ts`) harus selalu lolos telaah tanpa error dan saran. Mengubah aturan telaah wajib menjaga uji ini hijau, atau menjelaskan di changelog mengapa buku saku yang berubah.
+- **TP-2** Status "Siap" tidak boleh dapat dipilih selama ada temuan tingkat error. Aturan baru ditulis sebagai kode TP-nn, lengkap dengan uji, dan sumbernya (bagian buku saku) dicatat di komentar.
 - **SET-1** Menyimpan pengaturan tidak boleh mengubah `plan` atau `ownerId` (dijaga rules; uji manual setelah mengubah `firestore.rules`).
+
+### Pengembangan lokal
+- **DEV-1** Setelah menimpa berkas dari paket pembaruan, jika `package.json` ikut berubah (lihat changelog), jalankan `npm install` SEBELUM `npm run build` atau `npm run dev`. Lalu commit `package-lock.json` yang diperbarui; tanpa itu `npm ci` di workflow GitHub gagal.
+- **DEV-2** Sebelum push: `npm test` dan `npm run build` keduanya lolos.
 
 ### Penayangan
 - **DEPLOY-1** `public/.htaccess` ikut terbawa ke `dist/`; refresh di rute dalam (mis. `/app/kelas`) tidak menghasilkan 404.
@@ -49,7 +55,7 @@ Uji lebar: **360, 390, 768, 1366, 1920, 2560 px** (DevTools â†’ ikon perangkat â
 - [ ] Memakai `PageHeader` dan pola kolom dari `docs/DESAIN.md`
 - [ ] Keadaan kosong, memuat, dan error sudah dirancang (bukan hanya keadaan terisi)
 - [ ] Koleksi data baru sudah ada di `firestore.rules` (RULES-2)
-- [ ] `npm test` hijau dan `npm run build` lolos
+- [ ] `npm install` dijalankan bila `package.json` berubah (DEV-1); `npm test` hijau dan `npm run build` lolos
 - [ ] Entri `CHANGELOG.md` + baris "Cek ulang" ditulis
 
 ## Riwayat regresi

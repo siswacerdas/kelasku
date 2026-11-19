@@ -3,6 +3,25 @@
 Aturan: setiap fase penting atau perbaikan mencatat **Ditambah / Diubah / Diperbaiki** dan **Cek ulang**
 (ID dari `docs/ANTI-REGRESI.md` yang harus diuji ulang setelah perubahan ini). Entri terbaru di atas.
 
+## [0.5.0] – 2026-11-18 – Tujuan pembelajaran dengan telaah mutu
+**Ide visual halaman**: TP tampil sebagai lembar kerja bergaris dengan rumusan kompetensi tersusun otomatis dari empat bagian, dan "telaah mutu" yang menemani seperti rekan sejawat (temuan dengan alasan), bukan daftar centang kaku.
+
+**Ditambah**
+- `/app/perencanaan/tujuan`: daftar TP (saring per kelas dan mata pelajaran) dan penyusun TP: kelas, mapel, elemen CP (boleh tanpa, untuk TP mandiri) beserta teks CP-nya, KKO, objek, konten, bukti (kalimat operasional tersusun otomatis), JP, tahapan proses (minimal 4), cara asesmen dan yang tidak dipakai, uji pemisahan empat pertanyaan.
+- Telaah mutu otomatis (`features/tp/model.ts`, 13 uji): kolom wajib, objek KKO tinggi, KKO terhadap fase, JP, tahapan proses, asesmen generik, kesesuaian KKO dengan bentuk asesmen (Peta KKO), kriteria kualitatif tanpa indikator, uji pemisahan. Status **Siap** hanya terbuka bila tidak ada temuan "perlu diperbaiki"; saran tidak memblokir.
+- Contoh terisi dari Buku Saku CP-ATP-TP Bagian V dijadikan **uji acuan**: harus selalu lolos tanpa temuan.
+
+**Diubah**
+- `firestore.rules`: koleksi `tp` ditambahkan. **Rules harus dipublikasikan ulang.**
+- README: langkah `npm install` setiap kali `package.json` berubah ditegaskan.
+
+**Diperbaiki / catatan**
+- Galat build 0.3.0 pada komputer lokal ("Cannot find module 'exceljs' / 'vitest'") disebabkan dependensi baru belum terpasang setelah berkas ditimpa. Instalasi bersih diuji dan lolos (build, 34 uji). Kontrak DEV-1 ditambahkan agar tidak berulang.
+
+**Cek ulang**: TP-1, TP-2, DEV-1, RULES-2, AUTH-2, LAYOUT-1 s.d. LAYOUT-5 pada `/app/perencanaan/tujuan` (terutama editor di 360 px dan 1920 px).
+
+**Keputusan yang diambil**: TP boleh dibuat tanpa memilih elemen CP (jalur guru yang sudah punya TP). Keterkaitan ke CP hanya petunjuk, tidak memblokir. TP disimpan per kelas dan mapel (dipakai bersama oleh rombel paralel); profil kelas baru berpengaruh pada tahap tangga pertemuan.
+
 ## [0.4.0] – 2026-11-18 – Fondasi perencanaan: Bank CP, profil konteks, Pengaturan
 **Ide visual halaman**: Bank CP menampilkan CP Fase A, B, C berdampingan dalam kolom (progresi terbaca sekilas), bukan kartu; profil konteks memperlihatkan dampak tiap jawaban di bawah pilihannya, bukan formulir pasif.
 

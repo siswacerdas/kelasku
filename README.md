@@ -5,6 +5,8 @@ Aplikasi administrasi guru (rencana pembelajaran, modul ajar, asesmen, rekap nil
 Stack: Vite + React + TypeScript + Tailwind, Firebase (Auth, Firestore, Storage), deploy ke Hostinger via GitHub Actions.
 
 ## Menjalankan lokal
+> Setiap kali `package.json` berubah (lihat CHANGELOG), jalankan `npm install` lebih dulu, lalu commit `package-lock.json`. Sebelum push: `npm test` dan `npm run build`.
+
 1. `npm install` (akan membuat `package-lock.json`, **commit file ini**)
 2. Salin `.env.example` menjadi `.env`, isi `VITE_FIREBASE_API_KEY`
 3. `npm run dev`

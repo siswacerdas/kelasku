@@ -42,10 +42,15 @@ Tujuan: hal yang sudah benar tidak rusak lagi saat menambah fitur. Dibaca sebelu
 - **DATA-1 (tambahan)** Penyusun TP hanya menulis bidang TP lewat `toStoredFields`; bidang `atp`, `id`, dan `status` tidak boleh ikut tertulis dari salinan lama. Menambah bidang TP baru berarti menambahkannya ke `toStoredFields` dan ke uji.
 - **SC-1** Contoh tangga lengkap (`lengkap()` di `scaffold/model.test.ts`) harus selalu lolos telaah tanpa error dan saran. Aturan baru wajib menjaga uji ini hijau.
 - **SC-2** Aturan telaah yang bersumber dari Peta Keputusan (SC-08, SC-17, SC-18, SC-22, SC-23) membaca jawaban dari `profile.ts` (satu-satunya sumber, PROFIL-1). Dilarang menduplikasi aturan pemetaan di tempat lain. Satu dokumen tangga per pasangan TP dan rombel (id `tpId_classId`); jangan mengubah pola id tanpa migrasi (DATA-1).
+- **RPM-1** Contoh "Norma dan Aturan" dari Buku Saku RPM v3 (`lengkap()` di `rpm/model.test.ts`) harus selalu lolos ceklis tanpa error dan saran. Aturan baru wajib menjaga uji ini hijau.
+- **RPM-2** Kode ceklis RPM-01..RPM-19 adalah penomoran kanonik; menambah atau mengubah butir berarti memperbarui `CEKLIS`, uji, dan `docs/PROTOKOL.md`. Butir audit mandiri tidak boleh dihitung "lolos" sebelum dicentang guru.
+- **RPM-3** Template Excel yang diunduh harus terbaca kembali dan isian tunggal dikenali dari kode (uji round-trip, termasuk lewat berkas Excel sungguhan). Mengubah `SCALARS` di `fields.ts` otomatis mengubah editor dan template; uji `template.test.ts` harus tetap hijau.
+- **ROLE-1** Peran admin HANYA dari custom claim yang dipasang lewat Admin SDK, dibaca klien hanya untuk menampilkan menu; penegakan selalu di `firestore.rules` (`isAdmin()`). Dilarang menyimpan peran di dokumen yang dapat ditulis klien. Kueri pustaka untuk guru wajib memuat `where("status","==","terbit")`.
 - **SET-1** Menyimpan pengaturan tidak boleh mengubah `plan` atau `ownerId` (dijaga rules; uji manual setelah mengubah `firestore.rules`).
 
 ### Pengembangan lokal
 - **DEV-1** Setelah menimpa berkas dari paket pembaruan, jika `package.json` ikut berubah (lihat changelog), jalankan `npm install` SEBELUM `npm run build` atau `npm run dev`. Lalu commit `package-lock.json` yang diperbarui; tanpa itu `npm ci` di workflow GitHub gagal.
+- **DEV-3** `scripts/cek-deps.mjs` (dijalankan oleh `predev`, `prebuild`, `pretest`) tidak boleh dilepas dari skrip npm. Bila muncul pesannya, ikuti petunjuknya sebelum mencari penyebab lain.
 - **DEV-2** Sebelum push: `npm test` dan `npm run build` keduanya lolos.
 
 ### Penayangan

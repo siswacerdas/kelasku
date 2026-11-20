@@ -22,3 +22,13 @@ Isi GitHub > Settings > Secrets and variables > Actions > Secrets:
 `VITE_FIREBASE_*` (6 nilai dari `.env.example`), `FTP_SERVER`, `FTP_USERNAME`, `FTP_PASSWORD`, `FTP_DIR`.
 Data FTP ada di hPanel > Files > FTP Accounts. `FTP_DIR` biasanya `/public_html/` (sesuaikan dengan folder awal akun FTP).
 Setiap push ke `main` akan membangun dan mengunggah isi `dist/` otomatis.
+
+## Peran admin (untuk mengelola Pustaka RPM)
+Peran admin berupa *custom claim*, dipasang sekali oleh pemilik proyek:
+1. `npm i --no-save firebase-admin`
+2. Firebase Console > Project settings > Service accounts > Generate new private key; simpan berkasnya di LUAR folder repo (jangan di-commit).
+3. `node scripts/set-admin.mjs C:\jalur\kunci.json emailanda@gmail.com`
+4. Keluar lalu masuk lagi di aplikasi. Tab Pustaka akan berlabel "(admin)".
+
+## Jika `npm run dev` atau `npm run build` menolak berjalan
+Skrip `scripts/cek-deps.mjs` memeriksa dependensi dan menampilkan penyebabnya (paket belum terpasang atau `package.json` belum yang terbaru). Ikuti petunjuk pada pesannya.

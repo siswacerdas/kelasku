@@ -72,3 +72,13 @@ scaffolds/{tpId}_{classId}   analisis{kkoMakna, buktiTercapai, bukanTermasuk, pr
                              jpPerPertemuan, profilHash, status
 ```
 `profilHash` menyimpan ringkasan jawaban profil saat tangga terakhir disimpan; bila profil berubah, telaah memberi peringatan SC-07. Koleksi `rpm` (berikutnya) akan merujuk satu tangga (`scaffoldId`) dan satu pertemuan di dalamnya.
+
+## Revisi 0.8.0: RPM, pustaka, admin
+```
+workspaces/{ws}/rpm/{id}     RpmFields + status (draf|siap) + sumber{libraryId}?   (milik guru)
+rpmLibrary/{id}              RpmFields + status (draf|terbit) + judul + updatedBy   (global; admin menulis, guru membaca yang terbit)
+RpmFields                    identitas, a{peserta didik, materi}, b{CP, TP tahunan/harian, indikator, 8 dimensi, praktik, kemitraan, lingkungan},
+                             c{5 tabel kegiatan (waktu, kegiatan, catatan), adaptasi 3 kategori x 3 tahap inti, catatan PAK},
+                             d{diagnostik, formatif 3 tingkat, sumatif, rubrik pengetahuan/kinerja, observasi, KKTP}, konfirmasi (audit mandiri)
+```
+Peran: custom claim `admin: true` pada token Auth (bukan dokumen Firestore). AI (0.9.0) berjalan di Cloud Functions, hanya dapat dipanggil admin, menulis ke `rpmLibrary` berstatus draf, dan keluarannya wajib lolos `lintRpm` sebelum bisa diterbitkan.

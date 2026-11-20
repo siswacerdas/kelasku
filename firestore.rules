@@ -3,6 +3,7 @@ service cloud.firestore {
   match /databases/{database}/documents {
 
     function signedIn() { return request.auth != null; }
+    function isAdmin() { return request.auth != null && request.auth.token.admin == true; }
 
     function memberPath(ws, uid) {
       return /databases/$(database)/documents/workspaces/$(ws)/members/$(uid);
@@ -41,8 +42,15 @@ service cloud.firestore {
       // Data kerja guru
       match /{coll}/{docId} {
         allow read, write: if isMember(ws)
-          && coll in ['classes', 'students', 'subjects', 'objectives', 'tp', 'scaffolds', 'plans', 'modules', 'assessments', 'scores'];
+          && coll in ['classes', 'students', 'subjects', 'objectives', 'tp', 'scaffolds', 'rpm', 'plans', 'modules', 'assessments', 'scores'];
       }
+    }
+
+    // Pustaka RPM bersama: guru hanya membaca yang terbit; admin (custom claim) mengelola.
+    // Kueri guru WAJIB memuat where("status","==","terbit") agar sesuai aturan ini.
+    match /rpmLibrary/{id} {
+      allow read: if signedIn() && (resource.data.status == 'terbit' || isAdmin());
+      allow create, update, delete: if isAdmin();
     }
 
     // Selain yang diizinkan di atas: tolak semua

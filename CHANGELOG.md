@@ -3,6 +3,28 @@
 Aturan: setiap fase penting atau perbaikan mencatat **Ditambah / Diubah / Diperbaiki** dan **Cek ulang**
 (ID dari `docs/ANTI-REGRESI.md` yang harus diuji ulang setelah perubahan ini). Entri terbaru di atas.
 
+## [0.8.0] – 2026-11-19 – RPM per pertemuan, template Excel, pustaka, dan peran admin
+**Ide visual halaman**: dokumen kerja panjang A sampai D dengan ceklis mutu 19 butir yang menetap di rel kanan (mulai 1760 px) dan berubah dari "Perlu" menjadi "Lolos" saat guru menulis; tabel kegiatan memperlihatkan subtotal waktu per tahap dan total terhadap alokasi.
+
+**Keputusan arah (pemilik produk)**: AI hanya untuk admin. Guru memakai RPM dari pustaka, mengetik sendiri, atau mengunggah template Excel. Karena itu 0.8.0 membangun semua fondasi yang dibutuhkan AI admin (skema, validator, pustaka, peran), dan fungsi AI-nya sendiri dijadwalkan di 0.9.0.
+
+**Ditambah**
+- `/app/perencanaan/rpm` (menu **RPM**; rute lama `rencana` dialihkan): tab **RPM saya** dan **Pustaka**.
+- Editor RPM manual untuk seluruh struktur Buku Saku RPM v3 (A. Identifikasi, B. Desain, C. Pengalaman belajar dengan lima tabel No/Waktu/Kegiatan/Catatan dan adaptasi Cepat/Lambat/Pemalu, D. Asesmen termasuk rubrik, ceklis observasi, KKTP), dapat dimulai dari TP (mengisi tautan, mapel, kelas, TP tahunan, CP, instrumen).
+- **Ceklis mutu 19 butir** (`features/rpm/model.ts`, 24 uji): penomoran kanonik RPM-01..RPM-19 atas baris ceklis Bagian VIII. Butir otomatis: struktur lengkap, TP/indikator, 8 dimensi, adaptasi, "Langkah N", waktu (setiap baris dan total sama dengan alokasi), granularitas (heuristik), ritual pembuka/penutup, catatan, formatif tiga tingkat, status sumatif, rubrik, observasi, KKTP, konsistensi PAK, data kop. Butir yang tidak dapat diperiksa mesin (kreativitas, kesesuaian fase, guru pengganti, inklusif) menjadi **audit mandiri** berupa centang.
+- **Template Excel** (unduh dan unggah): tujuh lembar (Isi, Dimensi, Kegiatan, Adaptasi, Rubrik, Observasi, KKTP) plus Petunjuk. Isian tunggal dikenali dari KODE, jadi label boleh disesuaikan. Hasil unggah dibuka di editor dengan catatan hal yang tidak dikenali; tidak langsung tersimpan.
+- **Pustaka RPM** (`rpmLibrary`): guru melihat yang terbit dan menekan Gunakan (disalin ke RPM saya sebagai draf, audit mandiri direset); admin membuat, mengubah, menerbitkan, menarik, dan menghapus.
+- **Peran admin** lewat custom claim (`admin: true`), dibaca di `AuthContext` (`isAdmin`) dan ditegakkan di `firestore.rules`. Skrip `scripts/set-admin.mjs` memasang peran (dijalankan sekali oleh pemilik proyek).
+- **Pengaman dependensi** `scripts/cek-deps.mjs`, dijalankan otomatis sebelum `dev`, `build`, dan `test`: memeriksa setiap paket yang diimpor kode ada di `package.json` dan terpasang di `node_modules`, lalu memberi pesan jelas. Dibuat karena galat "Failed to resolve import exceljs" terjadi dua kali di komputer lokal.
+
+**Diubah**
+- `firestore.rules`: koleksi `rpm` (per ruang kerja) dan `rpmLibrary` (global; baca = terbit atau admin, tulis = admin).
+- Bidang isian tunggal RPM didefinisikan sekali (`fields.ts`) dan dipakai editor sekaligus template Excel.
+
+**Cek ulang**: RPM-1, RPM-2, RPM-3, ROLE-1, DEV-1, RULES-2, AUTH-2, LAYOUT-1 s.d. LAYOUT-6 pada `/app/perencanaan/rpm` (editor di 360 px, 1280 px, 1920 px; kedua tab).
+
+**Utang yang diketahui**: ekspor dokumen resmi Word/PDF (Bagian X: kop, tabel identitas, blok pengesahan) dijadwalkan setelah AI; "Modul ajar" masih halaman sementara (belum diputuskan apakah terpisah dari RPM); skrip `set-admin.mjs` dan aturan `rpmLibrary` belum teruji terhadap Firebase sungguhan (tidak dapat dijalankan di lingkungan pengembangan ini); uji granularitas bersifat heuristik.
+
 ## [0.7.0] – 2026-11-18 – Tangga pertemuan (scaffolding) per TP per rombel
 **Ide visual halaman**: lembar kerja panjang yang mengikuti Blok 0-3 buku saku, dengan "peta keputusan kelas" dan telaah mutu menetap di rel kanan (mulai 1760 px) sehingga guru melihat langsung bagaimana profil kelasnya memengaruhi tangga yang ia susun.
 

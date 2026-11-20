@@ -12,7 +12,7 @@ export const navGroups: NavGroup[] = [
       { to: "/app/perencanaan/tujuan", label: "Tujuan pembelajaran" },
       { to: "/app/perencanaan/alur", label: "Alur (ATP)" },
       { to: "/app/perencanaan/tangga", label: "Tangga pertemuan" },
-      { to: "/app/perencanaan/rencana", label: "Rencana pembelajaran" },
+      { to: "/app/perencanaan/rpm", label: "RPM" },
       { to: "/app/perencanaan/modul", label: "Modul ajar" },
     ],
   },
@@ -30,7 +30,7 @@ export const navGroups: NavGroup[] = [
 export const mobileTabs: NavItem[] = [
   { to: "/app", label: "Beranda", end: true },
   { to: "/app/kelas", label: "Kelas" },
-  { to: "/app/perencanaan/rencana", label: "Rencana", prefix: "/app/perencanaan" },
+  { to: "/app/perencanaan/rpm", label: "RPM", prefix: "/app/perencanaan" },
   { to: "/app/asesmen", label: "Asesmen" },
   { to: "/app/nilai", label: "Nilai" },
 ];

@@ -1,13 +1,16 @@
 {
   "name": "kelasku",
   "private": true,
-  "version": "0.7.0",
+  "version": "0.8.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview",
-    "test": "vitest run"
+    "test": "vitest run",
+    "predev": "node scripts/cek-deps.mjs",
+    "prebuild": "node scripts/cek-deps.mjs",
+    "pretest": "node scripts/cek-deps.mjs"
   },
   "dependencies": {
     "exceljs": "^4.4.0",

@@ -27,7 +27,7 @@ Dua analisis CP dipakai sebagai **uji acuan** untuk keluaran AI: temuan kunci ha
 ## Status penerapan RPM (0.8.0)
 Penomoran kanonik ceklis Bagian VIII (usulan perapian nomor 1 di atas) sudah dipakai sebagai RPM-01 sampai RPM-19. Pemetaan: 1,2,3,4,5,6,6b,6d,6e,6f,6c,7,8,9,10,11,12,13,14 menjadi RPM-01..RPM-19 secara berurutan. Butir 4, 5, 6 (bagian inklusif), dan 6b (uji guru pengganti) menjadi audit mandiri guru.
 
-## Rencana AI khusus admin (0.9.0)
+## AI khusus admin (diterapkan di 0.9.0; belum teruji terhadap layanan sungguhan)
 - Cloud Function callable, memeriksa claim `admin`; kunci API disimpan sebagai secret fungsi, tidak pernah di klien.
 - Masukan: TP, tangga scaffolding, profil, mapel/kelas/pertemuan, ditambah buku saku (CP-ATP-TP, Scaffolding, RPM v3) sebagai instruksi sistem berversi.
 - Keluaran: JSON sesuai skema `RpmFields`, dihasilkan bagian demi bagian, divalidasi `lintRpm` dan diperbaiki otomatis sekali; disimpan ke `rpmLibrary` berstatus draf. Admin meninjau, mengubah, lalu menerbitkan.

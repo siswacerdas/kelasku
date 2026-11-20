@@ -47,6 +47,11 @@ Tujuan: hal yang sudah benar tidak rusak lagi saat menambah fitur. Dibaca sebelu
 - **RPM-3** Template Excel yang diunduh harus terbaca kembali dan isian tunggal dikenali dari kode (uji round-trip, termasuk lewat berkas Excel sungguhan). Mengubah `SCALARS` di `fields.ts` otomatis mengubah editor dan template; uji `template.test.ts` harus tetap hijau.
 - **ROLE-1** Peran admin HANYA dari custom claim yang dipasang lewat Admin SDK, dibaca klien hanya untuk menampilkan menu; penegakan selalu di `firestore.rules` (`isAdmin()`). Dilarang menyimpan peran di dokumen yang dapat ditulis klien. Kueri pustaka untuk guru wajib memuat `where("status","==","terbit")`.
 - **SET-1** Menyimpan pengaturan tidak boleh mengubah `plan` atau `ownerId` (dijaga rules; uji manual setelah mengubah `firestore.rules`).
+### AI (khusus admin)
+- **AI-1** Hasil AI TIDAK PERNAH berstatus terbit atau siap: selalu `draf` di pustaka (`buildLibraryPayload`, diuji). Penerbitan hanya oleh admin setelah meninjau. Audit mandiri (RPM-04..07) tidak pernah diisi mesin. CP disalin dari bank CP, bukan dari model.
+- **AI-2** Instruksi sistem berversi: mengubah `INSTRUKSI`, skema, atau berkas `functions/prompts/*` berarti menaikkan `PROMPT_VERSION` dan menjalankan uji `generate.test.ts`; setelah deploy, hasilkan satu RPM contoh dan pastikan temuan kunci masih bermunculan sebelum dipakai massal.
+- **FN-1** Fungsi dibundel dari `src/` yang sama (`functions/build.mjs`); validator mutu tidak boleh diduplikasi di dalam `functions/`. `npm --prefix functions run build` harus lolos (tipe dan bundel) sebelum deploy. Kunci API hanya sebagai secret fungsi; dilarang ada di kode, `.env` klien, atau repo.
+- **FN-2** Setiap fungsi yang dapat dipanggil klien wajib memeriksa `request.auth` dan claim di server, memvalidasi masukan, dan memiliki batas pemakaian.
 
 ### Pengembangan lokal
 - **DEV-1** Setelah menimpa berkas dari paket pembaruan, jika `package.json` ikut berubah (lihat changelog), jalankan `npm install` SEBELUM `npm run build` atau `npm run dev`. Lalu commit `package-lock.json` yang diperbarui; tanpa itu `npm ci` di workflow GitHub gagal.

@@ -82,3 +82,12 @@ RpmFields                    identitas, a{peserta didik, materi}, b{CP, TP tahun
                              d{diagnostik, formatif 3 tingkat, sumatif, rubrik pengetahuan/kinerja, observasi, KKTP}, konfirmasi (audit mandiri)
 ```
 Peran: custom claim `admin: true` pada token Auth (bukan dokumen Firestore). AI (0.9.0) berjalan di Cloud Functions, hanya dapat dipanggil admin, menulis ke `rpmLibrary` berstatus draf, dan keluarannya wajib lolos `lintRpm` sebelum bisa diterbitkan.
+
+## Revisi 0.9.0: AI
+```
+functions/                   Cloud Function generateRpm (Node 22), dibundel esbuild dari ../src (rpm, rpm-ai, tp, profil)
+functions/prompts/           tiga Buku Saku sebagai instruksi sistem berversi
+rpmLibrary/{id}.ai           { model, promptVersion, repaired, adjustedTime, remaining[kode temuan], usage } + createdBy
+aiUsage/{uid}_{yyyy-mm-dd}   { count } kuota harian; hanya ditulis fungsi (Admin SDK), tertutup bagi klien oleh rules
+```
+Alur: klien admin -> `generateRpm` (cek claim, validasi, kuota) -> A+B -> C dan D paralel -> rakit -> `lintRpm` -> satu perbaikan -> simpan draf pustaka -> admin meninjau dan menerbitkan.

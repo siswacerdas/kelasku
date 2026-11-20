@@ -20,6 +20,9 @@ jobs:
 
       - run: npm test
 
+      - name: Periksa build Cloud Function
+        run: npm --prefix functions ci && npm --prefix functions run build
+
       - run: npm run build
         env:
           VITE_FIREBASE_API_KEY: ${{ secrets.VITE_FIREBASE_API_KEY }}

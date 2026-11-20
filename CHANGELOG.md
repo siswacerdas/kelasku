@@ -3,6 +3,26 @@
 Aturan: setiap fase penting atau perbaikan mencatat **Ditambah / Diubah / Diperbaiki** dan **Cek ulang**
 (ID dari `docs/ANTI-REGRESI.md` yang harus diuji ulang setelah perubahan ini). Entri terbaru di atas.
 
+## [0.9.0] – 2026-11-19 – AI khusus admin untuk menyusun RPM pustaka
+**Ide visual halaman**: panel "Susun dengan AI" hanya tampil bagi admin di tab Pustaka, dengan garis tebal dan teks yang jujur soal biaya, durasi, dan status hasil (selalu draf).
+
+**Ditambah**
+- **Cloud Function `generateRpm`** (folder `functions/`): hanya dapat dipanggil akun ber-claim admin (diperiksa di server), kunci API Anthropic disimpan sebagai *secret* fungsi dan tidak pernah sampai ke klien, kuota harian per admin (`DAILY_LIMIT` = 20, koleksi `aiUsage` tertutup bagi klien), batas waktu 540 detik, hasil ditulis ke `rpmLibrary` berstatus **draf**.
+- **Pembuat RPM** (`features/rpm-ai`, 14 uji dengan klien model palsu): A+B dahulu, lalu C dan D paralel (keluaran terstruktur lewat tool use), perakitan, penyetelan selisih waktu kecil secara aritmetika, telaah dengan `lintRpm` yang SAMA dengan aplikasi (dibundel dari `src/`), lalu tepat satu putaran perbaikan otomatis. CP selalu disalin dari bank CP, bukan dari model. Audit mandiri (RPM-04 sampai 07) selalu dibiarkan kosong untuk manusia.
+- Instruksi sistem memuat tiga Buku Saku sebagai sumber kebenaran (`functions/prompts/`, di-*cache* agar panggilan berikutnya murah); versi tercatat di tiap hasil (`ai.promptVersion`).
+- Panel AI admin: pilih TP siap, pilih dasar pertemuan dari tangga scaffolding (atau biarkan AI menentukan), topik, pertemuan ke-, JP, arahan tambahan. Masukan divalidasi di klien dan di server.
+- `scripts` tidak berubah; `firebase.json` memuat konfigurasi fungsi; CI memeriksa build fungsi.
+
+**Diubah**
+- `saveLibrary` memakai `merge`, sehingga metadata asal AI tidak hilang saat admin mengedit.
+- `src/lib/firebase.ts` mengekspor klien Functions (region `asia-southeast1`).
+
+**Cek ulang**: AI-1, AI-2, FN-1, ROLE-1, RPM-1, RPM-2, DEV-1, LAYOUT-1 s.d. LAYOUT-6 pada tab Pustaka (panel AI di 360 px dan 1920 px).
+
+**Belum teruji (tidak dapat dijalankan di lingkungan pengembangan ini)**: pemanggilan nyata ke API Anthropic dan Firebase; deploy fungsi; aturan `rpmLibrary` dan claim admin terhadap Firebase sungguhan. Yang teruji: seluruh logika dengan klien model palsu, tipe terhadap SDK sungguhan, bundel termuat dan mengekspor `generateRpm`.
+
+**Keputusan yang diambil**: kuota dihitung per percobaan (biaya timbul walau gagal); satu putaran perbaikan saja agar biaya dan waktu terkendali; kualitas akhir tetap dijaga peninjauan admin, bukan kepercayaan pada model.
+
 ## [0.8.0] – 2026-11-19 – RPM per pertemuan, template Excel, pustaka, dan peran admin
 **Ide visual halaman**: dokumen kerja panjang A sampai D dengan ceklis mutu 19 butir yang menetap di rel kanan (mulai 1760 px) dan berubah dari "Perlu" menjadi "Lolos" saat guru menulis; tabel kegiatan memperlihatkan subtotal waktu per tahap dan total terhadap alokasi.
 

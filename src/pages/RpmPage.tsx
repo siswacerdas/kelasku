@@ -10,6 +10,7 @@ import { buildRpmTemplate, readSheets } from "../features/rpm/excel";
 import { countIssues, emptyRpm, lintRpm, prefillFromTp, type RpmDoc, type RpmFields } from "../features/rpm/model";
 import { sheetsToRpm } from "../features/rpm/template";
 import RpmEditor from "../features/rpm/RpmEditor";
+import AiPanel from "../features/rpm-ai/AiPanel";
 
 type Editing = { mode: "mine" | "library"; id: string | null; fields: RpmFields; judul?: string; notes: string[]; tp?: TpDoc };
 const sel = "mt-1 block w-full rounded-md border-2 border-mist bg-white px-3 py-2.5 focus:border-ink";
@@ -132,6 +133,8 @@ export default function RpmPage() {
           </div>
         ) : <p className="mt-2 text-moss">Pustaka dikelola admin. Pilih RPM di bawah, lalu tekan Gunakan untuk menyalinnya ke RPM saya dan menyesuaikannya.</p>}
       </section>
+
+      {tab === "library" && isAdmin && <AiPanel ws={ws} cp={cp} onDone={(m) => { setInfo(m); setError(null); }} />}
 
       {tab === "mine" ? (
         mine === null ? <p className="mt-10 text-moss">Memuat…</p> : mine.length === 0 ? (

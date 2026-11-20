@@ -27,7 +27,8 @@ export function subscribeLibrary(isAdmin: boolean, cb: (r: LibraryDoc[]) => void
 }
 export async function saveLibrary(id: string | null, f: RpmFields, status: LibraryDoc["status"], judul: string, uid: string): Promise<string> {
   const data = { ...toStoredRpm({ ...f, tpId: "" }), status, judul, updatedBy: uid, updatedAt: serverTimestamp() };
-  if (id) { await setDoc(doc(db, "rpmLibrary", id), data); return id; }
+  // merge: metadata asal AI (ai, createdBy) tidak hilang saat admin mengedit
+  if (id) { await setDoc(doc(db, "rpmLibrary", id), data, { merge: true }); return id; }
   return (await addDoc(lib(), { ...data, createdAt: serverTimestamp() })).id;
 }
 export const deleteLibrary = (id: string) => deleteDoc(doc(db, "rpmLibrary", id));

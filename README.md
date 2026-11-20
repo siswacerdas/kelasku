@@ -32,3 +32,13 @@ Peran admin berupa *custom claim*, dipasang sekali oleh pemilik proyek:
 
 ## Jika `npm run dev` atau `npm run build` menolak berjalan
 Skrip `scripts/cek-deps.mjs` memeriksa dependensi dan menampilkan penyebabnya (paket belum terpasang atau `package.json` belum yang terbaru). Ikuti petunjuk pada pesannya.
+
+## Mengaktifkan AI untuk admin (Cloud Function)
+Prasyarat: paket Firebase Blaze, peran admin sudah dipasang (lihat atas), dan **akun API Anthropic** di console.anthropic.com dengan saldo (terpisah dari langganan Claude.ai).
+1. `npm i -g firebase-tools` lalu `firebase login`
+2. `firebase functions:secrets:set ANTHROPIC_API_KEY` (tempel kunci API; kunci tidak disimpan di repo)
+3. `cd functions && npm install && cd ..`
+4. `firebase deploy --only functions` (otomatis membangun dahulu). Publikasikan juga `firestore.rules` bila belum.
+5. Opsional ganti model: buat `functions/.env` berisi `ANTHROPIC_MODEL=claude-opus-5-5`, lalu deploy ulang. Bawaan: `claude-sonnet-5-5`.
+6. Masuk sebagai admin, buka RPM > Pustaka, gunakan panel "Susun dengan AI".
+Biaya: tiap pembuatan = 4 sampai 5 panggilan model dengan instruksi sistem sekitar 30 ribu token (di-cache). Pasang *budget alert* di Google Cloud dan Anthropic; batas harian per admin ada di `src/features/rpm-ai/config.ts`.

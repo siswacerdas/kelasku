@@ -46,3 +46,8 @@ body {
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; animation: none !important; }
 }
+
+@page { margin: 16mm; }
+@media print {
+  body { background: #fff; }
+}

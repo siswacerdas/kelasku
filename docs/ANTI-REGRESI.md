@@ -46,7 +46,12 @@ Tujuan: hal yang sudah benar tidak rusak lagi saat menambah fitur. Dibaca sebelu
 - **RPM-2** Kode ceklis RPM-01..RPM-19 adalah penomoran kanonik; menambah atau mengubah butir berarti memperbarui `CEKLIS`, uji, dan `docs/PROTOKOL.md`. Butir audit mandiri tidak boleh dihitung "lolos" sebelum dicentang guru.
 - **RPM-3** Template Excel yang diunduh harus terbaca kembali dan isian tunggal dikenali dari kode (uji round-trip, termasuk lewat berkas Excel sungguhan). Mengubah `SCALARS` di `fields.ts` otomatis mengubah editor dan template; uji `template.test.ts` harus tetap hijau.
 - **ROLE-1** Peran admin HANYA dari custom claim yang dipasang lewat Admin SDK, dibaca klien hanya untuk menampilkan menu; penegakan selalu di `firestore.rules` (`isAdmin()`). Dilarang menyimpan peran di dokumen yang dapat ditulis klien. Kueri pustaka untuk guru wajib memuat `where("status","==","terbit")`.
-- **SET-1** Menyimpan pengaturan tidak boleh mengubah `plan` atau `ownerId` (dijaga rules; uji manual setelah mengubah `firestore.rules`).
+- **SET-1** Menyimpan pengaturan tidak boleh mengubah `plan` atau `ownerId` (dijaga rules; uji manual setelah mengubah `firestore.rules`).### Modul siswa
+- **MOD-1** Modul acuan lengkap (`lengkapModul()` di `modul/fixture.ts`) harus selalu lolos ceklis tanpa error dan saran. Fixture ini sementara (buku saku tanpa contoh utuh); bila diganti dengan modul contoh pemilik produk, perbarui uji agar tetap menjaga aturan.
+- **MOD-2** Kode MOD-01..MOD-14 adalah penomoran kanonik ceklis Bagian L; menambah atau mengubah butir berarti memperbarui `CEKLIS`, uji, dan `docs/PROTOKOL.md`. Jumlah subunit selalu mengikuti jumlah tangga yang dirujuk, tidak dihitung ulang.
+- **PRIV-1** Tampilan siswa (pratinjau dan cetak) tidak boleh memuat kunci jawaban, catatan PAK, elemen PAK, atau catatan Islami; kunci hanya di halaman guru dan hanya bila diminta. Dijaga uji `ModulPreview.test.tsx`; bidang guru-saja baru wajib ditambahkan ke uji itu.
+- **PRINT-1** Saat mencetak, menu, sidebar, dan kontrol disembunyikan (`print:hidden`); layar cetak tidak boleh memuat kolom kosong bekas sidebar. Periksa ulang lewat Cetak atau Simpan PDF setiap mengubah `AppShell` atau pratinjau.
+
 ### AI (khusus admin)
 - **AI-1** Hasil AI TIDAK PERNAH berstatus terbit atau siap: selalu `draf` di pustaka (`buildLibraryPayload`, diuji). Penerbitan hanya oleh admin setelah meninjau. Audit mandiri (RPM-04..07) tidak pernah diisi mesin. CP disalin dari bank CP, bukan dari model.
 - **AI-2** Instruksi sistem berversi: mengubah `INSTRUKSI`, skema, atau berkas `functions/prompts/*` berarti menaikkan `PROMPT_VERSION` dan menjalankan uji `generate.test.ts`; setelah deploy, hasilkan satu RPM contoh dan pastikan temuan kunci masih bermunculan sebelum dipakai massal.

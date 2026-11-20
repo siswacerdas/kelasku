@@ -13,7 +13,7 @@ export const navGroups: NavGroup[] = [
       { to: "/app/perencanaan/alur", label: "Alur (ATP)" },
       { to: "/app/perencanaan/tangga", label: "Tangga pertemuan" },
       { to: "/app/perencanaan/rpm", label: "RPM" },
-      { to: "/app/perencanaan/modul", label: "Modul ajar" },
+      { to: "/app/perencanaan/modul", label: "Modul siswa" },
     ],
   },
   {

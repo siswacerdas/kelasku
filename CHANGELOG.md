@@ -3,6 +3,28 @@
 Aturan: setiap fase penting atau perbaikan mencatat **Ditambah / Diubah / Diperbaiki** dan **Cek ulang**
 (ID dari `docs/ANTI-REGRESI.md` yang harus diuji ulang setelah perubahan ini). Entri terbaru di atas.
 
+## [0.10.0] – 2026-11-19 – Modul siswa (modul ajar mandiri)
+**Ide visual halaman**: editor dengan ceklis mutu 14 butir di rel kanan, dan pratinjau yang benar-benar tampak seperti lembar siswa (sampul, kotak "Sebelum Kita Mulai", garis jawab, kotak Refleksiku) untuk dicetak atau disimpan sebagai PDF.
+
+**Penjelasan nama**: Buku Saku Modul v5 membedakan "Modul Ajar Guru/RPM" dari "Modul Ajar Mandiri (teks siswa)". Yang dibangun di sini adalah yang kedua, sehingga menu bernama **Modul siswa** (RPM tetap untuk guru).
+
+**Ditambah**
+- `/app/perencanaan/modul` (menu **Modul siswa**; halaman sementara diganti): tab **Modul saya** dan **Pustaka modul**, dengan pola yang sama seperti RPM (guru memakai modul pustaka, mengetik sendiri; admin mengelola pustaka).
+- Editor modul lengkap menurut Bagian E: identitas, dimensi fokus beserta wujud tugasnya, pengantar, asesmen awal diagnostik, subunit (pemantik, bacaan, aktivitas inti, latihan formatif, refleksi pribadi, tugas rumah, catatan Islami dan PAK), asesmen akhir, produk belajar, refleksi akhir, glosarium, dan audit mandiri Materi Pintu Masuk. Dapat dimulai dari satu alternatif scaffolding: jumlah subunit mengikuti jumlah tangga (D.3).
+- **Ceklis mutu 14 butir** (`features/modul/model.ts`, 22 uji), kode MOD-01..MOD-14 sesuai Bagian L, ditambah MOD-00 (kelengkapan) dan MOD-F (panjang bacaan per fase, Bagian F). Mencakup: istilah teknis guru di teks siswa, jumlah subunit vs tangga, produk belajar, asesmen awal diagnostik, pintu masuk, pemantik terpisah, formatif (maks 50% PG, min 1 uraian, min 1 penerapan), refleksi di setiap subunit, variasi antar-subunit, dimensi sebagai tugas konkret, PAK tanpa istilah ke siswa, format cetak vs digital, nilai Islami.
+- **Pratinjau cetak** teks siswa (browser: Cetak atau Simpan PDF); kunci jawaban hanya tampil bila diminta dan di halaman guru. Menu dan sidebar otomatis disembunyikan saat mencetak.
+- Pengaturan sekolah: pilihan **Integrasikan nilai Islami** (bawaan aktif). Bila dimatikan, telaah tidak memeriksa MOD-14 dan editor menyembunyikan isian Islami. Buku saku asli khusus sekolah Muhammadiyah; produk ini dibuat bisa melayani sekolah lain.
+
+**Diubah**
+- `firestore.rules`: koleksi `modul` (per ruang kerja) dan `modulLibrary` (global; baca = terbit atau admin, tulis = admin). **Rules harus dipublikasikan ulang.**
+- Komponen isian bersama dipindah ke `components/Fields.tsx` (dipakai editor modul; editor RPM belum dimigrasikan).
+
+**Cek ulang**: MOD-1, MOD-2, PRIV-1, PRINT-1, ROLE-1, RULES-2, DATA-1, LAYOUT-1 s.d. LAYOUT-6 pada `/app/perencanaan/modul` (editor di 360 px dan 1920 px; pratinjau dan hasil cetak).
+
+**Utang yang diketahui**: template Excel dan pembuat modul dengan AI (khusus admin) belum ada, dijadwalkan 0.11.0 dengan pola yang sama seperti RPM; ekspor Word/PDF resmi RPM dan modul belum ada (sementara memakai cetak browser); Buku Saku Kalender-Jadwal-Prota/Promes (sumber JP tervalidasi dan batas jumlah subunit) belum diterima dan belum ada di aplikasi; modul acuan uji disusun dari kriteria ceklis karena buku saku tidak memuat contoh modul utuh; elemen interaktif digital baru berupa penanda dan padanan cetak, belum ada penyaji interaktif.
+
+**Keputusan yang diambil**: "Modul ajar mandiri" adalah entitas terpisah dari RPM dan berada di akhir pipeline; MOD-01 memeriksa singkatan huruf besar (CP, TP, RPP, RPM, PAK) dan frasa baku, bukan kata "Pak" biasa; pelanggaran aturan keras buku saku menjadi error (memblokir status siap), anjuran menjadi saran.
+
 ## [0.9.0] – 2026-11-19 – AI khusus admin untuk menyusun RPM pustaka
 **Ide visual halaman**: panel "Susun dengan AI" hanya tampil bagi admin di tab Pustaka, dengan garis tebal dan teks yang jujur soal biaya, durasi, dan status hasil (selalu draf).
 

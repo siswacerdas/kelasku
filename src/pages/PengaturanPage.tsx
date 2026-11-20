@@ -70,6 +70,10 @@ export default function PengaturanPage() {
               <label className="block"><span className="font-medium">Nama guru</span><input className={field} value={teacher.name} onChange={set(setTeacher, "name")} /></label>
               <label className="block"><span className="font-medium">NIP/NIK guru</span><input className={field} value={teacher.id} onChange={set(setTeacher, "id")} inputMode="numeric" /></label>
             </div>
+            <label className="mt-5 flex max-w-[60ch] cursor-pointer gap-3">
+              <input type="checkbox" className="mt-1.5" checked={school.islami} onChange={(e) => setSchool((o) => (o ? { ...o, islami: e.target.checked } : o))} />
+              <span><span className="font-medium">Integrasikan nilai Islami dalam modul ajar</span><span className="block text-sm text-moss">Aktif untuk sekolah Islam. Matikan bila tidak berlaku; telaah mutu modul tidak lagi memeriksa butir nilai Islami.</span></span>
+            </label>
             <div className="mt-5 flex flex-wrap items-center gap-4">
               <button className="rounded-lg bg-chalk px-5 py-3 font-semibold text-ink hover:brightness-95">Simpan data</button>
               {status && <p role="status" className="text-sm font-medium">{status}</p>}

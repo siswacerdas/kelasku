@@ -42,13 +42,19 @@ service cloud.firestore {
       // Data kerja guru
       match /{coll}/{docId} {
         allow read, write: if isMember(ws)
-          && coll in ['classes', 'students', 'subjects', 'objectives', 'tp', 'scaffolds', 'rpm', 'plans', 'modules', 'assessments', 'scores'];
+          && coll in ['classes', 'students', 'subjects', 'objectives', 'tp', 'scaffolds', 'rpm', 'modul', 'plans', 'modules', 'assessments', 'scores'];
       }
     }
 
     // Pustaka RPM bersama: guru hanya membaca yang terbit; admin (custom claim) mengelola.
     // Kueri guru WAJIB memuat where("status","==","terbit") agar sesuai aturan ini.
     match /rpmLibrary/{id} {
+      allow read: if signedIn() && (resource.data.status == 'terbit' || isAdmin());
+      allow create, update, delete: if isAdmin();
+    }
+
+    // Pustaka modul ajar bersama: pola sama dengan rpmLibrary (guru baca yang terbit, admin kelola).
+    match /modulLibrary/{id} {
       allow read: if signedIn() && (resource.data.status == 'terbit' || isAdmin());
       allow create, update, delete: if isAdmin();
     }

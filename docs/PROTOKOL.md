@@ -33,3 +33,12 @@ Penomoran kanonik ceklis Bagian VIII (usulan perapian nomor 1 di atas) sudah dip
 - Keluaran: JSON sesuai skema `RpmFields`, dihasilkan bagian demi bagian, divalidasi `lintRpm` dan diperbaiki otomatis sekali; disimpan ke `rpmLibrary` berstatus draf. Admin meninjau, mengubah, lalu menerbitkan.
 - Uji acuan: contoh "Norma dan Aturan" dan dua analisis CP; temuan kunci harus tetap muncul setelah prompt diubah.
 - Kontrol biaya: batas panggilan per hari, pencatatan pemakaian per admin.
+
+## Modul siswa (Buku Saku Modul Ajar Mandiri v5, diterapkan di 0.10.0)
+Ceklis Bagian L (14 butir) dikodekan sebagai MOD-01..MOD-14. Aturan dikode: istilah teknis di teks siswa, jumlah subunit, produk belajar, jumlah dan sifat asesmen awal, kriteria pintu masuk, pemantik terpisah, komposisi formatif, refleksi per subunit, variasi antar-subunit, dimensi sebagai tugas, PAK tanpa istilah, format cetak/digital, nilai Islami, dan panjang paragraf per fase (Bagian F: Fase A 2-3, B 3-4, C 4-6 kalimat). Yang tetap membutuhkan pertimbangan guru atau AI: kualitas bahasa dan kesesuaian materi, kewajaran contoh, kekonkretan pemantik, dan apakah pintu masuk benar-benar toleran.
+
+Temuan pada dokumen sumber (usulan perapian):
+1. Buku saku bertajuk khusus "SD Muhammadiyah 01 Kukusan" dan memuat Panduan Integrasi Nilai Islami. Produk komersial perlu melayani sekolah lain, jadi integrasi Islami dibuat pengaturan sekolah (bawaan aktif).
+2. Buku saku mengacu pada "Buku Saku Kalender-Jadwal-Prota/Promes" sebagai sumber JP tervalidasi dan batas realistis jumlah subunit (urutan kedua pipeline). Dokumen itu belum diterima dan modulnya belum ada di aplikasi; sementara batas 3 sampai 6 subunit dipakai sebagai peringatan.
+3. Tidak ada contoh modul utuh (hanya cuplikan). Uji acuan sementara disusun dari kriteria ceklis; sebaiknya diganti dengan satu modul contoh yang sudah dinilai baik.
+4. Penamaan: buku saku membedakan "Modul Ajar Guru/RPM" dan "Modul Ajar Mandiri". Menu aplikasi memakai "RPM" dan "Modul siswa" untuk menghindari kerancuan; teks siswa tidak boleh memuat frasa "Modul Ajar" (diperiksa MOD-01).

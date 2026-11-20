@@ -13,9 +13,9 @@ export default function AppShell() {
   const nama = user?.displayName ?? user?.email ?? "";
 
   return (
-    <div className="min-h-dvh lg:grid lg:grid-cols-[16rem_minmax(0,1fr)] 2xl:grid-cols-[18rem_minmax(0,1fr)]">
+    <div className="min-h-dvh print:block lg:grid lg:grid-cols-[16rem_minmax(0,1fr)] 2xl:grid-cols-[18rem_minmax(0,1fr)]">
       {/* Sidebar PC */}
-      <aside className="sticky top-0 hidden h-dvh flex-col self-start bg-ink px-5 py-8 text-paper lg:flex">
+      <aside className="sticky top-0 hidden h-dvh flex-col self-start bg-ink px-5 py-8 text-paper print:hidden lg:flex">
         <Link to="/app" className="font-display text-2xl font-extrabold text-chalk">
           Kelasku
         </Link>
@@ -54,7 +54,7 @@ export default function AppShell() {
 
       <div className="min-w-0">
         {/* Bar atas HP */}
-        <header className="flex items-center justify-between bg-ink px-4 py-3 text-paper lg:hidden">
+        <header className="flex items-center justify-between bg-ink px-4 py-3 text-paper print:hidden lg:hidden">
           <Link to="/app" className="font-display text-xl font-extrabold text-chalk">
             Kelasku
           </Link>
@@ -74,7 +74,7 @@ export default function AppShell() {
           </details>
         </header>
 
-        <main className="px-4 pb-28 pt-6 sm:px-8 lg:pb-12 lg:pt-10 xl:px-12 2xl:px-16">
+        <main className="px-4 pb-28 pt-6 print:p-0 sm:px-8 lg:pb-12 lg:pt-10 xl:px-12 2xl:px-16">
           <div className="mx-auto w-full max-w-[110rem]">
             {error && (
               <p role="alert" className="mb-6 rounded-lg border border-red-300 bg-red-50 px-4 py-3 text-sm text-red-800">
@@ -89,7 +89,7 @@ export default function AppShell() {
       {/* Menu bawah HP */}
       <nav
         aria-label="Menu utama"
-        className="fixed inset-x-0 bottom-0 z-20 border-t border-mist bg-paper pb-[env(safe-area-inset-bottom)] lg:hidden"
+        className="fixed inset-x-0 bottom-0 z-20 border-t border-mist bg-paper pb-[env(safe-area-inset-bottom)] print:hidden lg:hidden"
       >
         <ul className="grid grid-cols-5">
           {mobileTabs.map((item) => {

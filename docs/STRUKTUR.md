@@ -91,3 +91,16 @@ rpmLibrary/{id}.ai           { model, promptVersion, repaired, adjustedTime, rem
 aiUsage/{uid}_{yyyy-mm-dd}   { count } kuota harian; hanya ditulis fungsi (Admin SDK), tertutup bagi klien oleh rules
 ```
 Alur: klien admin -> `generateRpm` (cek claim, validasi, kuota) -> A+B -> C dan D paralel -> rakit -> `lintRpm` -> satu perbaikan -> simpan draf pustaka -> admin meninjau dan menerbitkan.
+
+## Revisi 0.10.0: modul siswa
+```
+workspaces/{ws}/modul/{id}   ModulFields + status (draf|siap) + sumber{libraryId}?   (milik guru)
+modulLibrary/{id}            ModulFields + status (draf|terbit)                      (global; admin menulis, guru membaca yang terbit)
+ModulFields                  mapelId, grade, semester, judul, format (cetak|digital|keduanya), tpId, jumlahTangga, elemenPak (catatan guru),
+                             dimensiFokus[{nama, wujud}], pengantar{6 bagian}, asesmenAwal{soal[], motivasi},
+                             subunit[{judul, orientasi, jembatan, pemantik[], bacaan[], aktivitas{...}, formatif[Soal], refleksi[], tugasRumah, nilaiIslami[], pakWujud}],
+                             asesmenAkhir[Soal], produk{jenis, deskripsi, mulaiSubunit}, refleksiAkhir[], glosarium[], pintuMasuk{4 centang}
+Soal                         { jenis: pg|bs|isian|uraian|penerapan|cocok, teks, opsi, kunci(hanya guru) }
+workspaces/{ws}.school.islami  boolean (bawaan true): menyalakan integrasi nilai Islami pada modul
+```
+Pipeline akhir: CP -> TP -> ATP -> tangga scaffolding -> (RPM untuk guru) dan modul siswa. Modul siswa mengambil jumlah subunit dari alternatif tangga yang dipilih.
